@@ -15,20 +15,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         val rollButton = binding.button
         rollButton.setOnClickListener { rollDice() }
+        rollDice()
     }
 
-    fun rollDice() {
+    private fun rollDice() {
         val firstDice = Dice(6)
+        val rollFirstDice = firstDice.roll()
         val secondDice = Dice(6)
+        val rollSecondDice = secondDice.roll()
 
-        val resultTextView1 = binding.textView1
-        val resultTextView2 = binding.textView2
-        resultTextView1.text = diceResult(1, firstDice.roll().toString())
-        resultTextView2.text = diceResult(2, secondDice.roll().toString())
+        /** Display Dice  with the image corresponding to a random Number
+          Add content descriptio for accessibility users**/
+        val diceImage1 = binding.imageView1
+        diceImage1.setImageResource(diceImageShow(rollFirstDice))
+        diceImage1.contentDescription = rollFirstDice.toString()
+
+        val diceImage2 = binding.imageView2
+        diceImage2.setImageResource(diceImageShow(rollSecondDice))
+        diceImage1.contentDescription = rollSecondDice.toString()
+
     }
 
-    fun diceResult(diceIndex: Int, rolled: String): String {
-        return " Dice $diceIndex rolled $rolled"
+    private fun diceImageShow(rolledDice: Int): Int {
+        return when (rolledDice) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            6 -> R.drawable.dice_6
+            else -> R.drawable.dice_6
+        }
     }
 }
 
